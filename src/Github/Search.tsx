@@ -33,9 +33,8 @@ export const Search: FC<SearchPropsType> = ({value,onSubmit}) => {
                        setTempSearch(e.currentTarget.value)
                    }}
             />
-            <button onClick={() => {
-                onSubmit(tempSearch)
-            }}>find
+            <button  onClick={() => {onSubmit(tempSearch)}}>
+                find
             </button>
         </div>
     )
