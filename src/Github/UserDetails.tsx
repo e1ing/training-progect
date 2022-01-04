@@ -33,7 +33,7 @@ export const UserDetails: FC<UserDetailsPropsType> = ({user}) => {
 
     return (
         <div>
-            <Timer seconds={seconds} onChange={setSeconds}/>
+            <Timer timerKey={userDetails.id.toString()} seconds={seconds} onChange={setSeconds}/>
             <h2>Username</h2>
             {userDetails && <div>
                 <img src={userDetails.avatar_url}/>
