@@ -1,8 +1,8 @@
 import React, {useState} from "react";
 import s from './Github.module.css';
-import {Header} from "./Header";
-import {Details} from "./Details";
-import {List} from "./List";
+import {Search} from "./Search";
+import {UserDetails} from "./UserDetails";
+import {UsersList} from "./UsersList";
 
 export type SearchUserType = {
     login: string
@@ -11,12 +11,15 @@ export type SearchUserType = {
 
 export const Github = () => {
 
-    const [users, setUsers] = useState<SearchUserType[]>([]);
+    let initialSearchState = 'it-kamasutra'
+
     const [selectedUser, setSelectedUser] = useState<SearchUserType | null>(null);
+    const [searchTerm, setSearchTerm] = useState('it-kamasutra')
 
     return <div className={s.container}>
-       <Header setUsers={setUsers}/>
-       <List users={users} selectedUser={selectedUser} setSelectedUser={setSelectedUser}/>
-       <Details selectedUser={selectedUser}/>
+       <Search value={searchTerm} onSubmit={(value:string) => {setSearchTerm(value)}}/>
+        <button onClick={()=> setSearchTerm(initialSearchState)}>reset</button>
+       <UsersList term={searchTerm} selectedUser={selectedUser} onUserSelect={setSelectedUser}/>
+       <UserDetails user={selectedUser}/>
     </div>
 }

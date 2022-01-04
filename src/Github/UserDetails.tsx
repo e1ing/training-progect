@@ -1,27 +1,29 @@
 import React, {FC, useEffect, useState} from "react";
 import axios from "axios";
-import {UserType} from "./Header";
+import {UserType} from "./Search";
 import {SearchUserType} from "./Github";
+import { Timer } from "./Timer";
 
-type DetailsPropsType = {
-    selectedUser: SearchUserType|null
+type UserDetailsPropsType = {
+    user: SearchUserType | null
 }
 
-export const Details: FC<DetailsPropsType> = ({selectedUser}) => {
+export const UserDetails: FC<UserDetailsPropsType> = ({user}) => {
 
-    const [userDetails, setUserDetails] = useState<UserType|null >(null)
+    const [userDetails, setUserDetails] = useState<UserType | null>(null)
     useEffect(() => {
         console.log("SYNC USER DETAILS")
-        if (!!selectedUser) {
-            axios.get<UserType>(`https://api.github.com/users/${selectedUser.login}`)
+        if (!!user) {
+            axios.get<UserType>(`https://api.github.com/users/${user.login}`)
                 .then(res => {
                     setUserDetails(res.data)
                 })
         }
-    }, [selectedUser])
+    }, [user])
 
     return (
         <div>
+            <Timer/>
             <h2>Username</h2>
             {userDetails && <div>
                 <img src={userDetails.avatar_url}/>
