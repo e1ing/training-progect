@@ -18,8 +18,8 @@ type UserType = {
 
 export const Github = () => {
 
-    const [selectedUser, setSelectorUser] = useState<SearchUserType | null>(null);
-    const [userDetails, setUserDetails] = useState<null | UserType>(null)
+    const [selectedUser, setSelectedUser] = useState<SearchUserType | null>(null);
+    const [userDetails, setUserDetails] = useState<UserType|null >(null)
     const [users, setUsers] = useState<SearchUserType[]>([]);
     const [tempSearch, setTempSearch] = useState('it-kamasutra')
     const [searchTerm, setSearchTerm] = useState('it-kamasutra')
@@ -40,7 +40,7 @@ export const Github = () => {
     useEffect(() => {
         console.log("SYNC USER DETAILS")
         if (!!selectedUser) {
-            axios.get<UserType>(`https://api.github.com/search/users/${selectedUser.login}`)
+            axios.get<UserType>(`https://api.github.com/users/${selectedUser.login}`)
                 .then(res => {
                     setUserDetails(res.data)
                 })
@@ -64,7 +64,7 @@ export const Github = () => {
             <ul>
                 {users.map(u => <li key={u.id} className={selectedUser === u ? s.selected : ''}
                                     onClick={() => {
-                                        setSelectorUser(u)
+                                        setSelectedUser(u)
                                     }}>
                     {u.login}
                 </li>)}
@@ -72,12 +72,10 @@ export const Github = () => {
         </div>
         <div>
             <h2>Username</h2>
-            {userDetails &&
-                <div>
+            {userDetails && <div>
                     <img src={userDetails.avatar_url}/>
                     <br/>
-                    {userDetails.login},
-                    followers: {userDetails.followers}
+                    {userDetails.login}, followers: {userDetails.followers}
                 </div>}
         </div>
     </div>
